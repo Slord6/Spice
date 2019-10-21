@@ -1,0 +1,29 @@
+;target;fib;fibEnd;r1;r2;count;@
+ALS // NUL;
+// target is set to required # from LOD;
+// Start we do manually;
+PUT fibLen fib 0;
+PUT fibLen fib 1;
+PUT fibLen fib 1;
+// Keep track of the end of the fib array;
+ADD 0 2 fibLen;
+// LOOP START;
+// Get last element in fib, store in r1
+GET fibLen fib r1;
+// GET last-1 element in fib, store in r2
+SUB fibLen 1 r2;
+GET r2 fib r2;
+// Add elements, store in r1;
+ADD r1 r2 r1;
+// Increase tracked array index;
+ADD 1 fibLen fibLen;
+// Put new element in last position;
+PUT r1 fib fibLen;
+OUT fib;
+// Note - NUL (//) statements count towards line count, as does prog part 1, prior to '@';
+SWI fibLen target 10;
+//LOOP END;
+// Get the target element and store in r1;
+GET target fib r1;
+// End, return r1;
+BRK fibLen target r1;
