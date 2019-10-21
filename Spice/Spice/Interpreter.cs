@@ -14,6 +14,8 @@ namespace Spice
             {
                 Console.WriteLine(token);
             }
+
+            SyntaxTree syntaxTree = new SyntaxTree(tokens);
         }
 
         public void Run()

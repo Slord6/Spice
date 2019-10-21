@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Spice.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -62,6 +63,38 @@ namespace Spice
         public bool TryResolveAlias(string alias, out string op)
         {
             return aliases.TryGetValue(alias, out op);
+        }
+        public Ops ToOp(string op)
+        {
+            switch (op)
+            {
+                case "ADD":
+                    return Ops.ADD;
+                case "SUB":
+                    return Ops.SUB;
+                case "MUL":
+                    return Ops.MUL;
+                case "DIV":
+                    return Ops.DIV;
+                case "MOD":
+                    return Ops.MOD;
+                case "PUT":
+                    return Ops.PUT;
+                case "GET":
+                    return Ops.GET;
+                case "SWI":
+                    return Ops.SWI;
+                case "BRK":
+                    return Ops.BRK;
+                case "ALS":
+                    return Ops.ALS;
+                case "OUT":
+                    return Ops.OUT;
+                case "LOD":
+                    return Ops.LOD;
+                default:
+                    throw new OperatorConversionException("Op not recognised: " + op);
+            }
         }
     }
 }
