@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Spice.Tree
@@ -37,7 +38,18 @@ namespace Spice.Tree
 
         public override string ToString()
         {
-            return "Node: " + value.ToString();
+            StringBuilder builder = new StringBuilder();
+
+            builder.Append(value.ToString());
+
+            if (children.Count > 0)
+            {
+                builder.Append(Environment.NewLine);
+                builder.Append("With children: ");
+                builder.Append(String.Join(", ", children.Select(c => c.ToString())));
+            }
+
+            return builder.ToString();
         }
     }
 }

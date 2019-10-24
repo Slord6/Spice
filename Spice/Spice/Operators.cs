@@ -1,4 +1,5 @@
 ﻿using Spice.Exceptions;
+using Spice.Tree;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,21 +8,43 @@ namespace Spice
 {
     class Operators
     {
-        private static Operators instance = null;
+        private static Dictionary<int, Operators> operatorContexts = new Dictionary<int, Operators>();
         private Dictionary<string, string> aliases;
         private string[] operators;
+        private int id;
 
-        public static Operators GetInstance()
+        public int ID
         {
-            if (instance == null)
+            get
             {
-                instance = new Operators();
+                return id;
             }
-            return instance;
         }
 
-        private Operators()
+        /// <summary>
+        /// Get an Operators context from its ID
+        /// </summary>
+        /// <param name="ID">Operators ID</param>
+        /// <returns>Operators instance</returns>
+        public static Operators GetInstance(int ID)
         {
+            return operatorContexts[ID];
+        }
+
+        /// <summary>
+        /// Create a new Operators context
+        /// </summary>
+        /// <returns>ID</returns>
+        public static int New()
+        {
+            int ID = operatorContexts.Count;
+            operatorContexts.Add(ID, new Operators(ID));
+            return ID;
+        }
+
+        private Operators(int ID)
+        {
+            this.id = ID;
             this.operators = new string[]
             {
                 "ADD",
@@ -66,6 +89,7 @@ namespace Spice
         }
         public Ops ToOp(string op)
         {
+            if (aliases.ContainsKey(op)) op = aliases[op];
             switch (op)
             {
                 case "ADD":
@@ -92,9 +116,21 @@ namespace Spice
                     return Ops.OUT;
                 case "LOD":
                     return Ops.LOD;
+                case "NUL":
+                    return Ops.NUL;
                 default:
                     throw new OperatorConversionException("Op not recognised: " + op);
             }
+        }
+
+        public override string ToString()
+        {
+            List<string> aliasNames = new List<string>();
+            foreach (KeyValuePair<string, string> alias in aliases)
+            {
+                aliasNames.Add(alias.Key);
+            }
+            return "Operators: " + String.Join(", ", operators) + " | " + string.Join(", ", aliasNames);
         }
     }
 }

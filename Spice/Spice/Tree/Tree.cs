@@ -24,5 +24,10 @@ namespace Spice.Tree
                 root = value;
             }
         }
+
+        public override string ToString()
+        {
+            return "Tree: " + Root.ToString();
+        }
     }
 }

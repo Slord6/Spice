@@ -1,4 +1,4 @@
-;target;fib;fibEnd;r1;r2;count;@
+;target;fib;fibEnd;r1;r2;count;fibLen;@
 ALS // NUL;
 // target is set to required # from LOD;
 // Start we do manually;

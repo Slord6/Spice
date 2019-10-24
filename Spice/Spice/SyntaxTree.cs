@@ -8,6 +8,15 @@ namespace Spice
     class SyntaxTree
     {
         List<Tree<Token>> tree;
+
+        public List<Tree<Token>> Tree
+        {
+            get
+            {
+                return tree;
+            }
+        }
+
         public SyntaxTree(List<Token> tokens)
         {
             BuildTree(tokens);
@@ -34,12 +43,7 @@ namespace Spice
 
         private bool IsOpEnd(Token token)
         {
-            return token.TokenType == TokenType.Delimiter;
-        }
-
-        private bool IsNewOpStart(Token token)
-        {
-            return Operators.GetInstance().IsOperator(token.RawValue) || token.TokenType == TokenType.Variable;
+            return token.TokenType == TokenType.Delimiter || token.TokenType == TokenType.ProgramSplitter;
         }
 
         private Tree<Token> BuildOpTree(List<Token> tokens, int start, int end)

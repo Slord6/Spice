@@ -17,6 +17,7 @@ namespace Spice
        BRK,
        ALS,
        OUT,
-       LOD
+       LOD,
+        NUL
     }
 }
