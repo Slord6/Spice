@@ -11,6 +11,7 @@ namespace Spice
         Delimiter,
         Variable,
         ProgramSplitter,
+        StringLiteral,
         Unknown
     }
 }

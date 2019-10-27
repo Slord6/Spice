@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Spice.Exceptions
 {
-    class ParseException : SpiceException
+    class LexingException : SpiceException
     {
-        public ParseException(string message) : base(message)
+        public LexingException(string message) : base(message)
         {
         }
     }

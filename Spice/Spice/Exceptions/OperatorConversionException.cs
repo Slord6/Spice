@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Spice.Exceptions
 {
-    class OperatorConversionException : Exception
+    class OperatorConversionException : SpiceException
     {
         public OperatorConversionException(string message) : base(message)
         {

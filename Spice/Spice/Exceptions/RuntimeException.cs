@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Spice.Exceptions
 {
-    class RuntimeException : Exception
+    class RuntimeException : SpiceException
     {
         public RuntimeException(string message) : base(message)
         {

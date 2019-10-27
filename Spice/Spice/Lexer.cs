@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using Spice.Exceptions;
 
 namespace Spice
 {
@@ -71,11 +72,52 @@ namespace Spice
         {
             List<Token> tokens = new List<Token>();
             string[] tokenSplit = line.Split(' ');
-            foreach (string token in tokenSplit)
+            char stringLiteralWrapper = '"';
+            StringBuilder stringLiteralBuilder = null;
+            for (int i = 0; i < tokenSplit.Length; i++)
             {
+                string token = tokenSplit[i];
                 if (String.IsNullOrWhiteSpace(token) || String.IsNullOrEmpty(token)) continue;
                 string cleanToken = token.Replace(Environment.NewLine, "");
-                tokens.Add(new Token(cleanToken, GetTokenType(cleanToken, delimiter, variables, operators)));
+
+                if(stringLiteralBuilder != null)
+                {
+                    stringLiteralBuilder.Append(' ');
+                    for (int c = 0; c < token.Length; c++)
+                    {
+                        if (token[c] == stringLiteralWrapper)
+                        {
+                            if (c != token.Length - 1)
+                            {
+                                throw new LexingException("Cannot have string literal ending in the middle of a word at " + line + " in " + token);
+                            }
+                            token = stringLiteralBuilder.ToString();
+                            stringLiteralBuilder = null;
+                            tokens.Add(new Token(token, TokenType.StringLiteral));
+                            break;
+                        } else {
+                            stringLiteralBuilder.Append(token[c]);
+                        }
+                    }
+                    continue;
+                }
+
+                if (token.Contains(stringLiteralWrapper))
+                {
+                    if(token[0] != stringLiteralWrapper)
+                    {
+                        throw new LexingException("Cannot have string literal beginning in the middle of a word at " + line + " in " + token);
+                    }
+                    stringLiteralBuilder = new StringBuilder();
+                    if(token.Length > 1)
+                    {
+                        stringLiteralBuilder.Append(token.Split(stringLiteralWrapper)[1]);
+                    }
+                }
+                else
+                {
+                    tokens.Add(new Token(cleanToken, GetTokenType(cleanToken, delimiter, variables, operators)));
+                }
             }
             return tokens;
         }

@@ -1,4 +1,5 @@
 ﻿using Spice.Exceptions;
+using Spice.Output;
 using Spice.Tree;
 using System;
 using System.Collections.Generic;
@@ -30,9 +31,17 @@ namespace Spice
             }
             this.operators = operators;
 
+            string source;
+            try
+            {
+                source = File.ReadAllText(programPath);
+            }
+            catch (Exception ex)
+            {
+                throw new ModuleLoadException("Could not load module" + programPath, ex);
+            }
 
-            List<Token> tokens = Lexer.Lex(File.ReadAllText(programPath), operators);
-
+            List<Token> tokens = Lexer.Lex(source, operators);
             syntaxTree = new SyntaxTree(tokens);
             programContext = new ProgramContext(operators, syntaxTree);
         }
@@ -227,7 +236,7 @@ namespace Spice
             }
             catch(Exception ex)
             {
-                throw new RuntimeException("Could not resolve module " + fileName + ". With context - " + context.ToString(), ex);
+                throw new ModuleLoadException("Could not resolve module " + fileName + ". With context - " + context.ToString(), ex);
             }
 
             try
@@ -244,8 +253,8 @@ namespace Spice
         private void Out(ProgramContext context, Tree<Token> instruction)
         {
             string[] output = instruction.Root.Children.Where(n => n.Value.TokenType != TokenType.Delimiter)
-                .Select(n => string.Join(", ", context.Memory.ResolveToValue(n.Value.Lexeme))).ToArray();
-            Console.WriteLine(String.Join('\n', output));
+                .Select(n => n.Value.TokenType == TokenType.StringLiteral ? n.Value.Lexeme : "[" + string.Join(", ", context.Memory.ResolveToValue(n.Value.Lexeme)) + "]").ToArray();
+            ConsoleWriter.WriteLine(String.Join(' ', output), OutputLevel.PROGRAM);
         }
 
         private void Sin(ProgramContext context, string val, string storeIn)
@@ -284,7 +293,7 @@ namespace Spice
             catch (Exception ex)
             {
                 throw new RuntimeException("Could not read values from console in: " + input + "." + context, ex);
-             }
+            }
 
             context.Memory.SetVarValue(storeIn, values);
         }

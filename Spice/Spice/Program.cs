@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Spice.Exceptions;
+using Spice.Output;
+using System;
 
 namespace Spice
 {
@@ -6,11 +8,19 @@ namespace Spice
     {
         static void Main(string[] args)
         {
-            ConsoleWriter.isDebug = true;
+            ConsoleWriter.OutputLevel = OutputLevel.ERROR;
 
             string progPath = args.Length > 0 ? args[0] : Console.ReadLine();
-            Interpreter interp = new Interpreter(progPath);
-            interp.Run();
+            try
+            {
+                Interpreter interp = new Interpreter(progPath);
+                interp.Run();
+            }
+            catch (Exception ex)
+            {
+                bool includeStack = ex.GetType() == typeof(SpiceException);
+                ConsoleWriter.Write(ex, includeStack);
+            }
         }
     }
 }
