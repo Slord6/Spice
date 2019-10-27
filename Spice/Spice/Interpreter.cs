@@ -126,9 +126,13 @@ namespace Spice
                 case Ops.TAN:
                     Tan(context, instruction.Root.Children[0].Value.Lexeme, instruction.Root.Children[1].Value.Lexeme);
                     break;
-                case Ops.NUL:
-                default:
+                case Ops.POW:
+                    Pow(context, instruction.Root.Children[0].Value.Lexeme, instruction.Root.Children[1].Value.Lexeme, instruction.Root.Children[2].Value.Lexeme);
                     break;
+                case Ops.NUL:
+                    break;
+                default:
+                    throw new NotImplementedException("Op " + op + " has not been implemented in the interpreter");
             }
             return context;
         }
@@ -258,6 +262,13 @@ namespace Spice
         {
             double value = context.Memory.ResolveToSingleValue(val);
             context.Memory.SetVarValue(storeIn, new List<double>() { Math.Tan(value) });
+        }
+
+        private void Pow(ProgramContext context, string baseVal, string exponent, string storeIn)
+        {
+            double value1 = context.Memory.ResolveToSingleValue(baseVal);
+            double value2 = context.Memory.ResolveToSingleValue(exponent);
+            context.Memory.SetVarValue(storeIn, new List<double> { Math.Pow(value1, value2) });
         }
 
         private IEnumerable<Node<Token>> InstructionParametersOfTypesFilter(Tree<Token> instruction, TokenType[] types)

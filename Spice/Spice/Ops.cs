@@ -22,5 +22,6 @@ namespace Spice
         SIN,
         COS,
         TAN,
+        POW,
     }
 }
