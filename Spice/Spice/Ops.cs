@@ -24,5 +24,6 @@ namespace Spice
         TAN,
         POW,
         REA,
+        CLR,
     }
 }

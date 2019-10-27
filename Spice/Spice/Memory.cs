@@ -123,6 +123,12 @@ namespace Spice
             return val;
         }
 
+        public void Clear(string varName)
+        {
+            if(!memory.ContainsKey(varName)) throw new RuntimeException("Could not clear value @ " + varName);
+            memory[varName] = new List<double>();
+        }
+
         public override string ToString()
         {
             StringBuilder builder = new StringBuilder("Memory: ");

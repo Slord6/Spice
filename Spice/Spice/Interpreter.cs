@@ -141,6 +141,9 @@ namespace Spice
                 case Ops.REA:
                     Rea(context, instruction.Root.Children[0].Value.Lexeme);
                     break;
+                case Ops.CLR:
+                    Clr(context, instruction.Root.Children[0].Value.Lexeme);
+                    break;
                 case Ops.NUL:
                     break;
                 default:
@@ -296,6 +299,11 @@ namespace Spice
             }
 
             context.Memory.SetVarValue(storeIn, values);
+        }
+
+        private void Clr(ProgramContext context, string varName)
+        {
+            context.Memory.Clear(varName);
         }
 
         private IEnumerable<Node<Token>> InstructionParametersOfTypesFilter(Tree<Token> instruction, TokenType[] types)

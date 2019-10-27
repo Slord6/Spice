@@ -133,6 +133,8 @@ namespace Spice
                     return Ops.POW;
                 case "REA":
                     return Ops.REA;
+                case "CLR":
+                    return Ops.CLR;
                 default:
                     throw new OperatorConversionException("Op not recognised: " + op);
             }
