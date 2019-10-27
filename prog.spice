@@ -1,5 +1,4 @@
 ;target;result;@
 ADD 0 0 target;
 LOD fib.spice target result;
-OUT "Result:"
 OUT result
