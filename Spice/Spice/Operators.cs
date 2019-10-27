@@ -62,7 +62,8 @@ namespace Spice
                 "SIN",
                 "COS",
                 "TAN",
-                "POW"
+                "POW",
+                "REA"
             };
             this.aliases = new Dictionary<string, string>();
         }
@@ -130,6 +131,8 @@ namespace Spice
                     return Ops.TAN;
                 case "POW":
                     return Ops.POW;
+                case "REA":
+                    return Ops.REA;
                 default:
                     throw new OperatorConversionException("Op not recognised: " + op);
             }

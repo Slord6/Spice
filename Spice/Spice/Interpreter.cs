@@ -129,6 +129,9 @@ namespace Spice
                 case Ops.POW:
                     Pow(context, instruction.Root.Children[0].Value.Lexeme, instruction.Root.Children[1].Value.Lexeme, instruction.Root.Children[2].Value.Lexeme);
                     break;
+                case Ops.REA:
+                    Rea(context, instruction.Root.Children[0].Value.Lexeme);
+                    break;
                 case Ops.NUL:
                     break;
                 default:
@@ -220,7 +223,6 @@ namespace Spice
             {
                 moduleInterpreter = new Interpreter(fileName);
 
-                // This doesn't work because no variables exist yet, could push to stack and then pop as declared?
                 moduleInterpreter.ProgramContext.Memory.SetPassedValues(context.Memory.ResolveToValue(instruction.Root.Children[1].Value.Lexeme)); // Load module with passed values
             }
             catch(Exception ex)
@@ -241,9 +243,9 @@ namespace Spice
 
         private void Out(ProgramContext context, Tree<Token> instruction)
         {
-            string[] output = InstructionParametersOfTypesFilter(instruction, new TokenType[] { TokenType.Value, TokenType.Variable })
-                .Select(n => context.Memory.ResolveToSingleValue(n.Value.Lexeme).ToString()).ToArray();
-            Console.WriteLine(String.Join(' ', output));
+            string[] output = instruction.Root.Children.Where(n => n.Value.TokenType != TokenType.Delimiter)
+                .Select(n => string.Join(", ", context.Memory.ResolveToValue(n.Value.Lexeme))).ToArray();
+            Console.WriteLine(String.Join('\n', output));
         }
 
         private void Sin(ProgramContext context, string val, string storeIn)
@@ -269,6 +271,22 @@ namespace Spice
             double value1 = context.Memory.ResolveToSingleValue(baseVal);
             double value2 = context.Memory.ResolveToSingleValue(exponent);
             context.Memory.SetVarValue(storeIn, new List<double> { Math.Pow(value1, value2) });
+        }
+
+        private void Rea(ProgramContext context, string storeIn)
+        {
+            string input = Console.ReadLine();
+            List<double> values;
+            try
+            {
+                values = input.Split(", ").Select(x => double.Parse(x)).ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new RuntimeException("Could not read values from console in: " + input + "." + context, ex);
+             }
+
+            context.Memory.SetVarValue(storeIn, values);
         }
 
         private IEnumerable<Node<Token>> InstructionParametersOfTypesFilter(Tree<Token> instruction, TokenType[] types)

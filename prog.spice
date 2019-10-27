@@ -1,4 +1,17 @@
-;target;result;@
-ADD 0 0 target;
-LOD fib.spice target result;
+
+target
+result
+trigRes
+input
+@
+REA target
+LOD fib.spice target result
 OUT result
+SIN 1 trigRes
+OUT trigRes
+COS 1 trigRes
+OUT trigRes
+TAN 1 trigRes
+OUT trigRes
+POW 3 2 trigRes
+OUT trigRes input result

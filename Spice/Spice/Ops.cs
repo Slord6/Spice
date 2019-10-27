@@ -23,5 +23,6 @@ namespace Spice
         COS,
         TAN,
         POW,
+        REA,
     }
 }

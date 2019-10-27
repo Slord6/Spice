@@ -9,12 +9,10 @@ namespace Spice
     class Memory
     {
         private Dictionary<string, List<double>> memory;
-        private double[] returnValues;
         private Queue<double> passedValues;
         public Memory()
         {
             memory = new Dictionary<string, List<double>>();
-            returnValues = new double[0] { };
             passedValues = new Queue<double>();
         }
 
