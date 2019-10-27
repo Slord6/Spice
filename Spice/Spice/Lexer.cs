@@ -84,7 +84,7 @@ namespace Spice
         {
             if (token[0] == delimiter) return TokenType.Delimiter;
 
-            if (variables != null && variables.Select(t => t.RawValue).Contains(token)) return TokenType.Variable;
+            if (variables != null && variables.Select(t => t.Lexeme).Contains(token)) return TokenType.Variable;
 
             if (operators.IsOperator(token)) return TokenType.Operator;
 

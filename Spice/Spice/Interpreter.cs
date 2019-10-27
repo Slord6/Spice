@@ -47,14 +47,14 @@ namespace Spice
                 switch (tokenType)
                 {
                     case TokenType.Variable:
-                        programContext.Memory.Declare(instruction.Root.Value.RawValue);
+                        programContext.Memory.Declare(instruction.Root.Value.Lexeme);
                         break;
                     case TokenType.Delimiter:
                     case TokenType.ProgramSplitter:
                         break;
                     case TokenType.Unknown:
                         // Done at runtime rather than in Lexer to allow for ALS
-                        if (programContext.Operators.IsOperator(instruction.Root.Value.RawValue))
+                        if (programContext.Operators.IsOperator(instruction.Root.Value.Lexeme))
                         {
                             instruction.Root.Value.TokenType = TokenType.Operator;
                         }
@@ -77,36 +77,36 @@ namespace Spice
             ConsoleWriter.WriteLine(Environment.NewLine + "Instruction: " + instruction);
             ConsoleWriter.WriteLine(context.ToString());
 
-            Ops op = context.Operators.ToOp(instruction.Root.Value.RawValue);
+            Ops op = context.Operators.ToOp(instruction.Root.Value.Lexeme);
             ConsoleWriter.WriteLine("Run: " + instruction);
             switch (op)
             {
                 case Ops.ADD:
-                    Add(context, instruction.Root.Children[0].Value.RawValue, instruction.Root.Children[1].Value.RawValue, instruction.Root.Children[2].Value.RawValue);
+                    Add(context, instruction.Root.Children[0].Value.Lexeme, instruction.Root.Children[1].Value.Lexeme, instruction.Root.Children[2].Value.Lexeme);
                     break;
                 case Ops.SUB:
-                    Sub(context, instruction.Root.Children[0].Value.RawValue, instruction.Root.Children[1].Value.RawValue, instruction.Root.Children[2].Value.RawValue);
+                    Sub(context, instruction.Root.Children[0].Value.Lexeme, instruction.Root.Children[1].Value.Lexeme, instruction.Root.Children[2].Value.Lexeme);
                     break;
                 case Ops.MUL:
-                    Mul(context, instruction.Root.Children[0].Value.RawValue, instruction.Root.Children[1].Value.RawValue, instruction.Root.Children[2].Value.RawValue);
+                    Mul(context, instruction.Root.Children[0].Value.Lexeme, instruction.Root.Children[1].Value.Lexeme, instruction.Root.Children[2].Value.Lexeme);
                     break;
                 case Ops.DIV:
-                    Div(context, instruction.Root.Children[0].Value.RawValue, instruction.Root.Children[1].Value.RawValue, instruction.Root.Children[2].Value.RawValue);
+                    Div(context, instruction.Root.Children[0].Value.Lexeme, instruction.Root.Children[1].Value.Lexeme, instruction.Root.Children[2].Value.Lexeme);
                     break;
                 case Ops.MOD:
-                    Mod(context, instruction.Root.Children[0].Value.RawValue, instruction.Root.Children[1].Value.RawValue, instruction.Root.Children[2].Value.RawValue);
+                    Mod(context, instruction.Root.Children[0].Value.Lexeme, instruction.Root.Children[1].Value.Lexeme, instruction.Root.Children[2].Value.Lexeme);
                     break;
                 case Ops.PUT:
-                    Put(context, instruction.Root.Children[0].Value.RawValue, instruction.Root.Children[1].Value.RawValue, instruction.Root.Children[2].Value.RawValue);
+                    Put(context, instruction.Root.Children[0].Value.Lexeme, instruction.Root.Children[1].Value.Lexeme, instruction.Root.Children[2].Value.Lexeme);
                     break;
                 case Ops.GET:
-                    Get(context, instruction.Root.Children[0].Value.RawValue, instruction.Root.Children[1].Value.RawValue, instruction.Root.Children[2].Value.RawValue);
+                    Get(context, instruction.Root.Children[0].Value.Lexeme, instruction.Root.Children[1].Value.Lexeme, instruction.Root.Children[2].Value.Lexeme);
                     break;
                 case Ops.SWI:
-                    Swi(context, instruction.Root.Children[0].Value.RawValue, instruction.Root.Children[1].Value.RawValue, instruction.Root.Children[2].Value.RawValue);
+                    Swi(context, instruction.Root.Children[0].Value.Lexeme, instruction.Root.Children[1].Value.Lexeme, instruction.Root.Children[2].Value.Lexeme);
                     break;
                 case Ops.BRK:
-                    Brk(context, instruction.Root.Children[0].Value.RawValue, instruction.Root.Children[1].Value.RawValue, instruction.Root.Children[2].Value.RawValue);
+                    Brk(context, instruction.Root.Children[0].Value.Lexeme, instruction.Root.Children[1].Value.Lexeme, instruction.Root.Children[2].Value.Lexeme);
                     break;
                 case Ops.ALS:
                     AddAlias(context, instruction);
@@ -117,6 +117,15 @@ namespace Spice
                 case Ops.LOD:
                     Lod(context, instruction);
                     break;
+                case Ops.SIN:
+                    Sin(context, instruction.Root.Children[0].Value.Lexeme, instruction.Root.Children[1].Value.Lexeme);
+                    break;
+                case Ops.COS:
+                    Cos(context, instruction.Root.Children[0].Value.Lexeme, instruction.Root.Children[1].Value.Lexeme);
+                    break;
+                case Ops.TAN:
+                    Tan(context, instruction.Root.Children[0].Value.Lexeme, instruction.Root.Children[1].Value.Lexeme);
+                    break;
                 case Ops.NUL:
                 default:
                     break;
@@ -126,7 +135,7 @@ namespace Spice
 
         private void AddAlias(ProgramContext context, Tree<Token> instruction)
         {
-            context.Operators.AddAlias(instruction.Root.Children[0].Value.RawValue, instruction.Root.Children[1].Value.RawValue);
+            context.Operators.AddAlias(instruction.Root.Children[0].Value.Lexeme, instruction.Root.Children[1].Value.Lexeme);
         }
 
         private void Add(ProgramContext context, string val1, string val2, string varName)
@@ -201,14 +210,14 @@ namespace Spice
 
         private void Lod(ProgramContext context, Tree<Token> instruction)
         {
-            string fileName = instruction.Root.Children[0].Value.RawValue;
+            string fileName = instruction.Root.Children[0].Value.Lexeme;
             Interpreter moduleInterpreter;
             try
             {
                 moduleInterpreter = new Interpreter(fileName);
 
                 // This doesn't work because no variables exist yet, could push to stack and then pop as declared?
-                moduleInterpreter.ProgramContext.Memory.SetPassedValues(context.Memory.ResolveToValue(instruction.Root.Children[1].Value.RawValue)); // Load module with passed values
+                moduleInterpreter.ProgramContext.Memory.SetPassedValues(context.Memory.ResolveToValue(instruction.Root.Children[1].Value.Lexeme)); // Load module with passed values
             }
             catch(Exception ex)
             {
@@ -218,7 +227,7 @@ namespace Spice
             try
             {
                 moduleInterpreter.Run();
-                context.Memory.SetVarValue(instruction.Root.Children[2].Value.RawValue, moduleInterpreter.ProgramContext.Memory.GetFullValue("return"));
+                context.Memory.SetVarValue(instruction.Root.Children[2].Value.Lexeme, moduleInterpreter.ProgramContext.Memory.GetFullValue("return"));
             }
             catch(Exception ex)
             {
@@ -229,8 +238,26 @@ namespace Spice
         private void Out(ProgramContext context, Tree<Token> instruction)
         {
             string[] output = InstructionParametersOfTypesFilter(instruction, new TokenType[] { TokenType.Value, TokenType.Variable })
-                .Select(n => context.Memory.ResolveToSingleValue(n.Value.RawValue).ToString()).ToArray();
+                .Select(n => context.Memory.ResolveToSingleValue(n.Value.Lexeme).ToString()).ToArray();
             Console.WriteLine(String.Join(' ', output));
+        }
+
+        private void Sin(ProgramContext context, string val, string storeIn)
+        {
+            double value = context.Memory.ResolveToSingleValue(val);
+            context.Memory.SetVarValue(storeIn, new List<double>() { Math.Sin(value) });
+        }
+
+        private void Cos(ProgramContext context, string val, string storeIn)
+        {
+            double value = context.Memory.ResolveToSingleValue(val);
+            context.Memory.SetVarValue(storeIn, new List<double>() { Math.Cos(value) });
+        }
+
+        private void Tan(ProgramContext context, string val, string storeIn)
+        {
+            double value = context.Memory.ResolveToSingleValue(val);
+            context.Memory.SetVarValue(storeIn, new List<double>() { Math.Tan(value) });
         }
 
         private IEnumerable<Node<Token>> InstructionParametersOfTypesFilter(Tree<Token> instruction, TokenType[] types)

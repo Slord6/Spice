@@ -15,7 +15,7 @@ namespace Spice
             this.type = type;
         }
 
-        public string RawValue
+        public string Lexeme
         {
             get
             {

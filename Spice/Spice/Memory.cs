@@ -115,7 +115,8 @@ namespace Spice
             if (!isValue)
             {
                 val = GetVarValue(varOrVal);
-            } else
+            }
+            else
             {
                 val.Add(temp);
             }

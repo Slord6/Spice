@@ -6,18 +6,21 @@ namespace Spice
 {
     enum Ops
     {
-       ADD,
-       SUB,
-       MUL,
-       DIV,
-       MOD,
-       PUT,
-       GET,
-       SWI,
-       BRK,
-       ALS,
-       OUT,
-       LOD,
-        NUL
+        ADD,
+        SUB,
+        MUL,
+        DIV,
+        MOD,
+        PUT,
+        GET,
+        SWI,
+        BRK,
+        ALS,
+        OUT,
+        LOD,
+        NUL,
+        SIN,
+        COS,
+        TAN,
     }
 }
