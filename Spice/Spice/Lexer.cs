@@ -13,6 +13,9 @@ namespace Spice
         public static List<Token> Lex(string source, Operators operators)
         {
             List<Token> tokens = new List<Token>();
+
+            if (source.Length == 0) return tokens;
+
             char delimiter = GetDelimiter(source);
 
             string[] splitProg = source.Split(progSplit);
