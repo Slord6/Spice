@@ -295,7 +295,7 @@ namespace Spice
             List<double> values;
             try
             {
-                values = input.Split(", ").Select(x =>
+                values = input.Split(", ", StringSplitOptions.RemoveEmptyEntries).Select(x =>
                 {
                     return input[0] == '#'
                     ? BitConverter.Int64BitsToDouble(Convert.ToInt64(input.Split('#', StringSplitOptions.RemoveEmptyEntries)[0], 16))
