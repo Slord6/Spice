@@ -3,7 +3,7 @@
 
  ## TL;DR
  - Spice is an interpreted assembly-like language with a handful of operators:
-    - `ADD`, `SUB`, `MUL`, `DIV`, `MOD`, `PUT`, `GET`, `SWI`, `BRK`, `ALS`, `OUT`, `LOD`, `SIN`, `COS`, `TAN`, `POW`, `REA`, `CLR`
+    - `ADD`, `SUB`, `MUL`, `DIV`, `MOD`, `PUT`, `GET`, `SWI`, `BRK`, `ALS`, `OUT`, `LOD`, `SIN`, `COS`, `TAN`, `POW`, `REA`, `CLR`, `NUL`
  - Spice programs are split into two sections; `declaration` and `instruction` split with an `@` character.
  - All values are dynamically sized `double` arrays with the exception of string literals, `"Some string"`, which may be used in OUT statements, but not stored
  - The end of instructions is denoted by a user-defined character - the first character of the program
@@ -24,7 +24,7 @@
  ```
 
  ## Declaration
- In the above program, `;` is declared as the program delimiter (note newline characters are still accepted with a non-newline separator). Following the delimiter declaration is the declaratio  of all variables used in the program. In a module the order of varable declaration is important, as values passed to a module are loaded into each variable in declaration order.
+ In the above program, `;` is declared as the program delimiter (note newline characters are still accepted with a non-newline separator). Following the delimiter declaration is the declaration of all variables used in the program. In a module the order of varable declaration is important, as values passed to a module are loaded into each variable in declaration order.
 
  Instructions may only be used after declaration is complete, denoted by the '`@`' character.
 
@@ -57,7 +57,7 @@
 
  Explanation:
 
- The operator is applied to `x` and the result stored in `y`. `x` may be value literals or variable name. `y` must be a variable name.
+ The operator is applied to `x` and the result stored in `y`. `x` may be a value literal or variable name. `y` must be a variable name.
 
   Eg. 
   - `SIN 5 result` is the equivalent to `result = Sin(5)`
@@ -79,7 +79,7 @@
  - `PUT 5.7 array 10.8` is the equivalent to `array[5] = 10.8`
 
 
- ### `GET
+ ### `GET`
  Retrieve from array
 
  Format:
@@ -143,7 +143,7 @@
 
  Format:
   
- `OUT a b c d <...> e f g`
+ `OUT a b c d <...> x y z`
   
  Explanation:
 
@@ -162,7 +162,7 @@
   
  Explanation:
 
- The 'module' in the source file at `source.path` is loaded into its own context. The declared values for the module are set as they initalised to the value(s) of `arguments`. Modules must declare the variable `return` which is passed back to the calling program and assigned to the passed variable `z`. Module invokations may be nested indefinitely.
+ The 'module' in the source file at `source.path` is loaded into its own context. The declared values for the module are set as they are initalised to the value(s) of `arguments`. Modules must declare the variable `return` which is passed back to the calling program and assigned to the passed variable `z`. Module invocations may be nested indefinitely.
 
  Eg. 
  Module source (module.spice):
@@ -212,3 +212,17 @@
 
  Eg. 
  - `CLR value` - `value` is equal to `[]`/`0`
+
+### `NUL`
+A no-op
+
+Format:
+
+`NUL a b c <...> x y z`
+
+Explanation:
+
+A no-op, nothing happens. Any arguments are not resolved, and so it may be used as a method for adding comments. A NUL op does count towards line/op count for `SWI` statements.
+
+Eg.
+- `NUL This is a comment 100! woo-hoo!` - Nothing happens.
