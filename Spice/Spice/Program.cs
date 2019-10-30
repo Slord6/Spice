@@ -8,9 +8,11 @@ namespace Spice
     {
         static void Main(string[] args)
         {
-            ConsoleWriter.OutputLevel = OutputLevel.ERROR;
 
             string progPath = args.Length > 0 ? args[0] : Console.ReadLine();
+            OutputLevel outLevel = args.Length > 1 ? (OutputLevel)Convert.ToInt32(args[1]) : OutputLevel.ERROR;
+
+            ConsoleWriter.OutputLevel = outLevel;
             try
             {
                 Interpreter interp = new Interpreter(progPath);

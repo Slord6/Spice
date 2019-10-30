@@ -197,7 +197,9 @@ namespace Spice
             double first = context.Memory.ResolveToSingleValue(val1);
             double second = context.Memory.ResolveToSingleValue(val2);
             int lineNo = (int)context.Memory.ResolveToSingleValue(val3);
+            ConsoleWriter.Write("SWI, PC at " + context.ProgramCounter + " before and ", OutputLevel.DEBUG);
             if (first < second) context.ProgramCounter = context.LineToTokenNumber(lineNo - 1); // -1 as will increment when next instruction requested
+            ConsoleWriter.WriteLine(context.ProgramCounter + " after", OutputLevel.DEBUG);
         }
 
         private void Put(ProgramContext context, string index, string array, string value)
@@ -287,6 +289,7 @@ namespace Spice
 
         private void Rea(ProgramContext context, string storeIn)
         {
+            ConsoleWriter.Write(">", OutputLevel.PROGRAM);
             string input = Console.ReadLine();
             List<double> values;
             try
