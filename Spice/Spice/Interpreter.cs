@@ -3,6 +3,7 @@ using Spice.Output;
 using Spice.Tree;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -294,7 +295,12 @@ namespace Spice
             List<double> values;
             try
             {
-                values = input.Split(", ").Select(x => double.Parse(x)).ToList();
+                values = input.Split(", ").Select(x =>
+                {
+                    return input[0] == '#'
+                    ? BitConverter.Int64BitsToDouble(Convert.ToInt64(input.Split('#', StringSplitOptions.RemoveEmptyEntries)[0], 16))
+                    : double.Parse(x);
+                }).ToList();
             }
             catch (Exception ex)
             {
