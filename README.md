@@ -23,6 +23,20 @@
  BRK 1 0 result
  ```
 
+ ## Interpreter
+
+ Invoking a Spice program take the following format:
+
+ `spice.exe .\prog.spice outputLevel`
+
+ Where `spice.exe` is the interpreter, `.\prog.spice` is a valid Spice source file and outputLevel is a number denoting the verbosity of the program.
+
+ Output levels are:
+ - PROGRAM = 0 (Least verbose, program output only)
+ - ERROR = 1
+ - DEBUG = 2
+ - INFO = 3 (Most verbose)
+
  ## Declaration
  In the above program, `;` is declared as the program delimiter (note newline characters are still accepted with a non-newline separator). Following the delimiter declaration is the declaration of all variables used in the program. In a module the order of varable declaration is important, as values passed to a module are loaded into each variable in declaration order.
 
