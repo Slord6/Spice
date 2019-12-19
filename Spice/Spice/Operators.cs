@@ -63,7 +63,8 @@ namespace Spice
                 "COS",
                 "TAN",
                 "POW",
-                "REA"
+                "REA",
+                "NUL"
             };
             this.aliases = new Dictionary<string, string>();
         }
