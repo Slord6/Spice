@@ -12,20 +12,20 @@
 
  ``` Spice
  ;input;result;@
- OUT "Input a number:"
- REA input
- OUT "Number is" input
- MOD 10 input result
- OUT input "mod 10 is" result
- ALS OUT SAY
- SAY "Now SAY is a valid operator"
- LOD .\module.spice input
- BRK 1 0 result
+ OUT "Input a number:";
+ REA input;
+ OUT "Number is" input;
+ MOD 10 input result;
+ OUT input "mod 10 is" result;
+ ALS OUT SAY;
+ SAY "Now SAY is a valid operator";
+ LOD .\module.spice input;
+ BRK 1 0 result;
  ```
 
  ## Interpreter
 
- Invoking a Spice program take the following format:
+ Invoking a Spice program takes the following format:
 
  `spice.exe .\prog.spice outputLevel`
 
