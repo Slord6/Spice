@@ -238,7 +238,16 @@ namespace Spice
             {
                 moduleInterpreter = new Interpreter(fileName);
 
-                moduleInterpreter.ProgramContext.Memory.SetPassedValues(context.Memory.ResolveToValue(instruction.Root.Children[1].Value.Lexeme)); // Load module with passed values
+                Node<Token> passedValToken = instruction.Root.Children[1];
+                if (passedValToken.Value.TokenType == TokenType.PassableArray)
+                {
+                    string varName = passedValToken.Value.Lexeme.Split(Lexer.passableArrayModifier)[1];
+                    moduleInterpreter.ProgramContext.Memory.SetPassedValue(context.Memory.ResolveToValue(varName));
+                }
+                else
+                {
+                    moduleInterpreter.ProgramContext.Memory.SetPassedValues(context.Memory.ResolveToValue(passedValToken.Value.Lexeme)); // Load module with passed values
+                }
             }
             catch(Exception ex)
             {

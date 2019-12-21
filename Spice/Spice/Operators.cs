@@ -69,7 +69,7 @@ namespace Spice
             this.aliases = new Dictionary<string, string>();
         }
 
-        public void AddAlias(string alias, string op)
+        public void AddAlias(string op, string alias)
         {
             this.aliases.Add(alias, op);
         }

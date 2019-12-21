@@ -9,6 +9,7 @@ namespace Spice
     static class Lexer
     {
         private static char progSplit = '@';
+        public static readonly char passableArrayModifier = '^';
 
         public static List<Token> Lex(string source, Operators operators)
         {
@@ -114,7 +115,13 @@ namespace Spice
                     stringLiteralBuilder = new StringBuilder();
                     if(token.Length > 1)
                     {
-                        stringLiteralBuilder.Append(token.Split(stringLiteralWrapper)[1]);
+                        string[] splitToken = token.Split(stringLiteralWrapper);
+                        stringLiteralBuilder.Append(splitToken[1]);
+                        if (splitToken.Length == 3)
+                        {
+                            tokens.Add(new Token(stringLiteralBuilder.ToString(), TokenType.StringLiteral));
+                            stringLiteralBuilder = null;
+                        }
                     }
                 }
                 else
@@ -129,7 +136,11 @@ namespace Spice
         {
             if (token[0] == delimiter) return TokenType.Delimiter;
 
-            if (variables != null && variables.Select(t => t.Lexeme).Contains(token)) return TokenType.Variable;
+            if (variables != null) {
+                if(variables.Select(t => t.Lexeme).Contains(token)) return TokenType.Variable;
+                string[] var = token.Split(passableArrayModifier);
+                if (var.Length > 1 && variables.Select(t => t.Lexeme).Contains(var[1])) return TokenType.PassableArray;
+            }
 
             if (operators.IsOperator(token)) return TokenType.Operator;
 

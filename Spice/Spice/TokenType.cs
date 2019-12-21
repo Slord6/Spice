@@ -12,6 +12,7 @@ namespace Spice
         Variable,
         ProgramSplitter,
         StringLiteral,
-        Unknown
+        Unknown,
+        PassableArray
     }
 }

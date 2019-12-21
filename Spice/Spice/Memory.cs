@@ -10,11 +10,12 @@ namespace Spice
     class Memory
     {
         private Dictionary<string, List<double>> memory;
-        private Queue<double> passedValues;
+        private Queue<List<double>> passedValues;
+
         public Memory()
         {
             memory = new Dictionary<string, List<double>>();
-            passedValues = new Queue<double>();
+            passedValues = new Queue<List<double>>();
         }
 
         public Dictionary<string, List<double>> Dump()
@@ -70,12 +71,25 @@ namespace Spice
             }
         }
 
+        /// <summary>
+        /// Sets the values for newly decalred variables to be set to by flattening the list
+        /// </summary>
+        /// <param name="values">The values to set</param>
         public void SetPassedValues(List<double> values)
         {
             foreach (double value in values)
             {
-                passedValues.Enqueue(value);
+                passedValues.Enqueue(new List<double>() { value });
             }
+        }
+
+        /// <summary>
+        /// Sets the value for the newly decalred variable to be set to
+        /// </summary>
+        /// <param name="values">The values to set</param>
+        public void SetPassedValue(List<double> values)
+        {
+            passedValues.Enqueue(values);
         }
 
         public void Declare(string varName)
@@ -83,7 +97,7 @@ namespace Spice
             memory.Add(varName, new List<double>());
             if(passedValues.Count > 0)
             {
-                memory[varName].Add(passedValues.Dequeue());
+                memory[varName] = passedValues.Dequeue();
                 ConsoleWriter.WriteLine("Set " + varName + " to passed value of " + memory[varName][0]);
             }
         }
