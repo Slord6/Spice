@@ -145,6 +145,9 @@ namespace Spice
                 case Ops.CLR:
                     Clr(context, instruction.Root.Children[0].Value.Lexeme);
                     break;
+                case Ops.LEN:
+                    Len(context, instruction.Root.Children[0].Value.Lexeme, instruction.Root.Children[1].Value.Lexeme);
+                    break;
                 case Ops.NUL:
                     break;
                 default:
@@ -322,6 +325,12 @@ namespace Spice
         private void Clr(ProgramContext context, string varName)
         {
             context.Memory.Clear(varName);
+        }
+
+        private void Len(ProgramContext context, string valOrVar, string var)
+        {
+            List<double> value = context.Memory.ResolveToValue(valOrVar);
+            context.Memory.SetVarValue(var, value.Count);
         }
 
         private IEnumerable<Node<Token>> InstructionParametersOfTypesFilter(Tree<Token> instruction, TokenType[] types)

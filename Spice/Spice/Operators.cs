@@ -64,6 +64,7 @@ namespace Spice
                 "TAN",
                 "POW",
                 "REA",
+                "LEN",
                 "NUL"
             };
             this.aliases = new Dictionary<string, string>();
@@ -134,6 +135,8 @@ namespace Spice
                     return Ops.POW;
                 case "REA":
                     return Ops.REA;
+                case "LEN":
+                    return Ops.LEN;
                 case "CLR":
                     return Ops.CLR;
                 default:

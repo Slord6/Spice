@@ -3,7 +3,7 @@
 
  ## TL;DR
  - Spice is an interpreted assembly-like language with a handful of operators:
-    - `ADD`, `SUB`, `MUL`, `DIV`, `MOD`, `PUT`, `GET`, `SWI`, `BRK`, `ALS`, `OUT`, `LOD`, `SIN`, `COS`, `TAN`, `POW`, `REA`, `CLR`, `NUL`
+    - `ADD`, `SUB`, `MUL`, `DIV`, `MOD`, `PUT`, `GET`, `SWI`, `BRK`, `ALS`, `OUT`, `LOD`, `SIN`, `COS`, `TAN`, `POW`, `REA`, `CLR`, `LEN`, `NUL`
  - Spice programs are split into two sections; `declaration` and `instruction` split with an `@` character.
  - All values are dynamically sized `double` arrays with the exception of string literals, `"Some string"`, which may be used in OUT statements, but not stored
  - The end of instructions is denoted by a user-defined character - the first character of the program
@@ -176,7 +176,9 @@
   
  Explanation:
 
- The 'module' in the source file at `source.path` is loaded into its own context. The declared values for the module are set as they are initalised to the value(s) of `arguments`. Modules must declare the variable `return` which is passed back to the calling program and assigned to the passed variable `z`. Module invocations may be nested indefinitely.
+ The 'module' in the source file at `source.path` is loaded into its own context. The declared values for the module are set as they are initalised to the value(s) of `arguments`. To instead set the value of ony the first variable to the value or arguments the syntax `^arguments` should be used.
+ 
+ Modules must declare the variable `return` which is passed back to the calling program and assigned to the passed variable `z`. Module invocations may be nested indefinitely.
 
  Eg. 
  Module source (module.spice):
@@ -197,6 +199,8 @@
  ```
 
  This results in the values `50` and `100` being output to the console. `result` is equal to `100` when control returns to the main program.
+
+ If instead `LOD .\module.spice array result` was used, the module would have `input1` initalised to `[50, 100]` and would output "`[50, 100] [0]`".
 
  ### `REA`
  Read value(s) from the console
@@ -226,6 +230,20 @@
 
  Eg. 
  - `CLR value` - `value` is equal to `[]`/`0`
+ 
+ ### `LEN`
+ Get the length of a variable
+
+ Format:
+  
+ `LEN x y`
+  
+ Explanation:
+
+ The length of `x` is stored in `y`.
+
+ Eg. 
+ - `LEN arr count` - `count` is equal to the length of arr
 
 ### `NUL`
 A no-op
