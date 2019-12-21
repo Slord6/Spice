@@ -72,7 +72,7 @@ namespace Spice
         }
 
         /// <summary>
-        /// Sets the values for newly decalred variables to be set to by flattening the list
+        /// Sets the values for newly declared variables to be set to by flattening the list
         /// </summary>
         /// <param name="values">The values to set</param>
         public void SetPassedValues(List<double> values)
@@ -84,12 +84,12 @@ namespace Spice
         }
 
         /// <summary>
-        /// Sets the value for the newly decalred variable to be set to
+        /// Sets the value for the next declared variable
         /// </summary>
         /// <param name="values">The values to set</param>
         public void SetPassedValue(List<double> values)
         {
-            passedValues.Enqueue(values);
+            passedValues.Enqueue(values.ToList());
         }
 
         public void Declare(string varName)
