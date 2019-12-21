@@ -39,7 +39,7 @@ namespace Spice
             }
             catch (Exception ex)
             {
-                throw new ModuleLoadException("Could not load module" + programPath, ex);
+                throw new ModuleLoadException("Could not load module " + programPath, ex);
             }
 
             List<Token> tokens = Lexer.Lex(source, operators);
@@ -236,6 +236,12 @@ namespace Spice
         private void Lod(ProgramContext context, Tree<Token> instruction)
         {
             string fileName = instruction.Root.Children[0].Value.Lexeme;
+            string stdPrefix = "std::";
+            if(fileName.Contains(stdPrefix))
+            {
+                string execuatbleLocation = new Uri(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase)).LocalPath;
+                fileName = execuatbleLocation + @"\std\" + fileName.Split(stdPrefix, StringSplitOptions.RemoveEmptyEntries)[0];
+            }
             Interpreter moduleInterpreter;
             try
             {

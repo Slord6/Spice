@@ -1,0 +1,12 @@
+;input;iterator;length;currMax;curr;return@
+ADD 0 1 iterator;
+GET 0 input currMax;
+LEN input length;
+NUL === START LOOP ===;
+GET iterator input curr;
+PUT 0 currMax curr;
+LOD .\std\max.spice currMax currMax;
+ADD iterator 1 iterator;
+SWI iterator length 3;
+NUL === END LOOP ===;
+ADD 0 currMax return;

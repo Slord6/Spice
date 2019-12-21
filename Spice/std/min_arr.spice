@@ -1,0 +1,12 @@
+;input;iterator;length;currMin;curr;return@
+ADD 0 1 iterator;
+GET 0 input currMin;
+LEN input length;
+NUL === START LOOP ===;
+GET iterator input curr;
+PUT 0 currMin curr;
+LOD .\std\min.spice currMin currMin;
+ADD iterator 1 iterator;
+SWI iterator length 3;
+NUL === END LOOP ===;
+ADD 0 currMin return;

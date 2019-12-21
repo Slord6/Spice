@@ -1,0 +1,21 @@
+;unsorted;unsortedVal;currSorted;outerIterator;innerIterator;unsortedLength;sortedLength;finalSortedIndex;return@
+LEN unsorted unsortedLength;
+NUL initalise outer counter to 0; 
+ADD 0 0 outerIterator;
+NUL ===== START OUTER LOOP =========;
+GET outerIterator unsorted unsortedVal;
+LEN return sortedLength;
+SUB sortedLength 1 finalSortedIndex;
+ADD 0 -1 innerIterator;
+NUL ===== START INNER LOOP =========;
+ADD innerIterator 1 innerIterator;
+NUL deal with over-running end of list;
+SWI finalSortedIndex innerIterator 15;
+NUL otherwise, get the current val, and if it's more than unsorted, insert at innerIterator-1;
+GET innerIterator return currSorted;
+SWI currSorted unsortedVal 8;
+NUL ====== END INNER LOOP ==========;
+PUT innerIterator return unsortedVal;
+ADD outerIterator 1 outerIterator;
+SWI outerIterator unsortedLength 3;
+NUL ===== END OUTER LOOP ===========;

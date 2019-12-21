@@ -176,7 +176,9 @@
   
  Explanation:
 
- The 'module' in the source file at `source.path` is loaded into its own context. The declared values for the module are set as they are initalised to the value(s) of `arguments`. To instead set the value of ony the first variable to the value or arguments the syntax `^arguments` should be used.
+ The 'module' in the source file at `source.path` is loaded into its own context. Modules from the standard library may be accessed through `std::module.spice`.
+ 
+ The declared values for the module are set as they are initalised to the value(s) of `arguments`. To instead set the value of ony the first variable to the enitre value of `arguments` the syntax `^arguments` should be used.
  
  Modules must declare the variable `return` which is passed back to the calling program and assigned to the passed variable `z`. Module invocations may be nested indefinitely.
 

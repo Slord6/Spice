@@ -8,8 +8,17 @@ namespace Spice
     {
         static void Main(string[] args)
         {
-
-            string progPath = args.Length > 0 ? args[0] : Console.ReadLine();
+            string progPath;
+            if (args.Length > 0)
+            {
+                progPath = args[0];
+            }
+            else
+            {
+                Console.WriteLine("Source path:");
+                Console.Write(">");
+                progPath = Console.ReadLine();
+            }
             OutputLevel outLevel = args.Length > 1 ? (OutputLevel)Convert.ToInt32(args[1]) : OutputLevel.ERROR;
 
             ConsoleWriter.OutputLevel = outLevel;
