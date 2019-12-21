@@ -1,4 +1,5 @@
 ;input1;input2;temp;return@
+CLR return;
 NUL Set input1 to be returned max;
 ADD 0 input1 return;
 NUL if input1 is smaller, return;
