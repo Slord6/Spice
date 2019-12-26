@@ -1,0 +1,15 @@
+;input;r1;counter;return@
+CLR return;
+CLR r1;
+CLR c;
+BRK input 0 input;
+ADD 0 0 return;
+ADD 0 1 counter;
+NUL === START LOOP ===;
+ADD counter 1 counter;
+MOD input counter r1;
+BRK r1 1 r1;
+SWI counter input 5;
+NUL === END LOOP ===;
+CLR return;
+ADD 0 1 return;
