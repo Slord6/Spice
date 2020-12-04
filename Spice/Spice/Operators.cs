@@ -45,28 +45,7 @@ namespace Spice
         private Operators(int ID)
         {
             this.id = ID;
-            this.operators = new string[]
-            {
-                "ADD",
-                "SUB",
-                "MUL",
-                "DIV",
-                "MOD",
-                "PUT",
-                "GET",
-                "SWI",
-                "BRK",
-                "ALS",
-                "OUT",
-                "LOD",
-                "SIN",
-                "COS",
-                "TAN",
-                "POW",
-                "REA",
-                "LEN",
-                "NUL"
-            };
+            this.operators = Enum.GetNames(typeof(Ops));
             this.aliases = new Dictionary<string, string>();
         }
 
