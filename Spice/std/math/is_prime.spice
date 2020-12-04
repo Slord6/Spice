@@ -1,0 +1,8 @@
+;input;m;remainder;counter;return@
+ADD 0 1 counter;
+SUB input 1 m;
+ADD counter 1 counter;
+MOD input counter remainder;
+SWI remainder 1 7;
+SWI counter m 1;
+ADD 0 1 return;
