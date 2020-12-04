@@ -38,7 +38,7 @@
  - INFO = 3 (Most verbose)
 
  ## Declaration
- In the above program, `;` is declared as the program delimiter (note newline characters are still accepted with a non-newline separator). Following the delimiter declaration is the declaration of all variables used in the program. In a module the order of varable declaration is important, as values passed to a module are loaded into each variable in declaration order.
+ In the above program, `;` is declared as the program delimiter (note newline characters are still accepted with a non-newline separator). Following the delimiter declaration is the declaration of all variables used in the program. In a module the order of varable declaration is important, as values passed to a module may be loaded into each variable in declaration order (see `LOD`).
 
  Instructions may only be used after declaration is complete, denoted by the '`@`' character.
 
@@ -164,8 +164,7 @@
  The value literals or variable values of any following argument is printed to the console. The arguments may be a double value literal, a variable name or a `"string literal"`. A string literal may span multiple lines, 
 
  Eg. 
- - `OUT var "hello" 200.2` results in the value of `var`, the string `"hello"` and `200.2` being printed to the console.
- - `ALS BRK END_IF_LSS_THN` results in `END_IF_LSS_THN` being an alias to `BRK`
+ - `OUT var "hello" 200.2` results in the value of `var`, the string `hello` and `200.2` being printed to the console.
 
  ### `LOD`
  Invoke a Spice source file with the given argument(s)
