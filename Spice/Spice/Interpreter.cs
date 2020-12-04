@@ -253,13 +253,11 @@ namespace Spice
                     string varName = passedValToken.Value.Lexeme.Split(Lexer.passableArrayModifier)[1];
                     // In this case, pass the entire array into the first variable of the loaded module
                     moduleInterpreter.ProgramContext.Memory.SetPassedValue(context.Memory.ResolveToValue(varName));
-                    Console.WriteLine("VarName = " + varName);
                 }
                 else
                 {
                     // In this case, each element of the value into each declared variable in turn
                     moduleInterpreter.ProgramContext.Memory.SetPassedValues(context.Memory.ResolveToValue(passedValToken.Value.Lexeme));
-                    Console.WriteLine("Lexeme: " + passedValToken.Value.Lexeme);
                 }
             }
             catch(Exception ex)
