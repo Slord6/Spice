@@ -53,12 +53,13 @@ namespace Spice
         {
             this.operators = operators;
             this.program = program;
+            this.programCounter = -1; // When the first instruction is got with GetNextInstruction, the pc will correctly tick up to 0 before returning the instruction
             this.memory = new Memory();
         }
 
         public Tree<Token> GetNextInstruction()
         {
-            programCounter++;
+            ProgramCounter++;
             return (programCounter >= program.Tree.Count) ? null : program.Tree[programCounter];
         }
 
