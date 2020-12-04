@@ -202,7 +202,7 @@ namespace Spice
             double second = context.Memory.ResolveToSingleValue(val2);
             int lineNo = (int)context.Memory.ResolveToSingleValue(val3);
             ConsoleWriter.Write("SWI, PC at " + context.ProgramCounter + " before and ", OutputLevel.DEBUG);
-            if (first < second) context.ProgramCounter = context.LineToTokenNumber(lineNo - 1); // -1 as will increment when next instruction requested
+            if (first < second) context.ProgramCounter = context.LineToTokenNumber(lineNo) - 1; // -1 as will increment when next instruction requested
             ConsoleWriter.WriteLine(context.ProgramCounter + " after", OutputLevel.DEBUG);
         }
 

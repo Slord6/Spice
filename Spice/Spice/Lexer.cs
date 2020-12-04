@@ -65,6 +65,7 @@ namespace Spice
             List<Token> tokens = new List<Token>();
             foreach (string line in sectionLines)
             {
+                if (String.IsNullOrWhiteSpace(line)) continue;
                 tokens.AddRange(LineToTokens(line, delimiter, variables, operators));
                 tokens.Add(new Token(delimiter.ToString(), TokenType.Delimiter));
 

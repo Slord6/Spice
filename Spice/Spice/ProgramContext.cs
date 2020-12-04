@@ -66,22 +66,22 @@ namespace Spice
         {
             bool pastSplit = false;
             int tokenCount = 0;
-            int opCount = 0;
             foreach (Tree<Token> token in program.Tree)
             {
-                tokenCount++;
                 TokenType tokenType = token.Root.Value.TokenType;
+                // Line count starts after '@' split, so add up tokens until then...
                 if (!pastSplit)
                 {
-                    if(tokenType == TokenType.ProgramSplitter)
+                    tokenCount++;
+                    if (tokenType == TokenType.ProgramSplitter)
                     {
                         pastSplit = true;
                     }
                     continue;
                 }
 
-                if (tokenType == TokenType.Operator || tokenType == TokenType.Unknown) opCount++;
-                if (opCount == line) return tokenCount;
+                // then add the required line number to get the total which == the token number of that line
+                return tokenCount + line;
             }
             throw new RuntimeException("Invalid line number " + line + ". Context: " + this);
         }
