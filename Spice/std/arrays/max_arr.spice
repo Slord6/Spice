@@ -1,12 +1,12 @@
-;input;iterator;length;currMin;curr;return@
+;input;iterator;length;currMax;curr;return@
 ADD 0 1 iterator;
-GET 0 input currMin;
+GET 0 input currMax;
 LEN input length;
 NUL === START LOOP ===;
 GET iterator input curr;
-PUT 0 currMin curr;
-LOD .\std\min.spice currMin currMin;
+PUT 0 currMax curr;
+LOD std::math\max.spice currMax currMax;
 ADD iterator 1 iterator;
 SWI iterator length 3;
 NUL === END LOOP ===;
-ADD 0 currMin return;
+ADD 0 currMax return;

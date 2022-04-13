@@ -1,0 +1,10 @@
+;n;n_lss_1;n_lss_2;fibb_n-1;fibb_n-2;tmp;return@
+NUL nth number of the fibonacci sequence
+ADD 0 1 return;
+BRK n 2 tmp;
+CLR return;
+SUB n 1 n_lss_1;
+SUB n 2 n_lss_2;
+LOD std::math\fib.spice n_lss_1 fibb_n-1;
+LOD std::math\fib.spice n_lss_2 fibb_n-2;
+ADD fibb_n-1 fibb_n-2 return;

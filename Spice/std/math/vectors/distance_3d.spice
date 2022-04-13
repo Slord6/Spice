@@ -1,0 +1,11 @@
+;x1;y1;z1;x2;y2;z2;xdiff;xsq;ydiff;ysq;zdiff;zsq;total;return@
+NUL Pass in x1, y1, z1, x2, y2, z2;
+SUB x2 x1 xdiff;
+SUB y2 y1 ydiff;
+SUB z2 z1 zdiff;
+POW xdiff 2 xsq;
+POW ydiff 2 ysq;
+POW zdiff 2 zsq;
+ADD xsq zsq total;
+ADD ysq total total;
+LOD std::math\sqrt.spice total return;

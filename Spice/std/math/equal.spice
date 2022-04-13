@@ -1,0 +1,10 @@
+;val1;val2;max;min;tmp;return@
+ADD 0 val1 tmp;
+ADD 0 val2 tmp;
+LOD std::math\max.spice tmp max;
+LOD std::math\min.spice tmp min;
+SUB min max tmp;
+ADD 0 0 return;
+BRK tmp 0 tmp;
+CLR return;
+ADD 0 1 return;

@@ -1,0 +1,5 @@
+;x1;y1;z1;x2;y2;z2;r1;return@
+ADD x1 x2 return;
+ADD y1 y2 return;
+ADD z1 z2 return;
+OUT return;

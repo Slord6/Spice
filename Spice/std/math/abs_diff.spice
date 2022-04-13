@@ -1,0 +1,5 @@
+;arr;a;b;return@
+GET 0 arr a;
+GET 1 arr b;
+SUB a b return;
+BRK 0 return return;
