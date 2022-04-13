@@ -31,6 +31,9 @@ namespace Spice
                     splitProg[i] = null;
                 }
                 splitProg[1] = merged;
+            } else if(splitProg.Length <= 1)
+            {
+                throw new LexingException("No program split '@'");
             }
 
             tokens.AddRange(SectionToTokens(splitProg[0], delimiter, operators));

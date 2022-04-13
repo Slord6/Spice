@@ -98,7 +98,7 @@ namespace Spice
             if(passedValues.Count > 0)
             {
                 memory[varName] = passedValues.Dequeue();
-                ConsoleWriter.WriteLine("Set " + varName + " to passed value of " + memory[varName][0]);
+                ConsoleWriter.WriteLine("Set " + varName + " to passed value (" + memory[varName].Count() + " values)");
             }
         }
 

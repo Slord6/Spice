@@ -79,7 +79,8 @@ namespace Spice
                 }
 
                 instruction = programContext.GetNextInstruction();
-            } 
+            }
+            ConsoleWriter.WriteLine("Module close: " + programContext.ToString(), OutputLevel.DEBUG);
         }
 
         public ProgramContext RunCommand(Tree<Token> instruction, ProgramContext context)
